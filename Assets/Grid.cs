@@ -21,6 +21,43 @@ public class Grid : MonoBehaviour {
 			(int)pos.x < w &&
 			(int)pos.y >= 0);
 	}
+	public static void deleteRow(int y) {//deletes the row that's full
+		for (int x = 0; x < w; ++x) {
+			Destroy(grid[x, y].gameObject);
+			grid[x, y] = null;
+		}
+	}
+	public static void decreaseRow(int y) {//move parameter row down by 1
+		for (int x = 0; x < w; ++x) {
+			if (grid[x, y] != null) {
+				// Move one towards bottom
+				grid[x, y-1] = grid[x, y];
+				grid[x, y] = null;
+
+				// Update Block position in world
+				grid[x, y-1].position += new Vector3(0, -1, 0);
+			}
+		}
+	}
+	public static void decreaseRowsAbove(int y) {//move all rows above down by 1 
+		for (int i = y; i < h; ++i)
+			decreaseRow(i);
+	}
+	public static bool isRowFull(int y) {//checks if parameter row is full
+		for (int x = 0; x < w; ++x)
+			if (grid[x, y] == null)
+				return false;
+		return true;
+	}
+	public static void deleteFullRows() {//deletes rows that are full
+		for (int y = 0; y < h; ++y) {
+			if (isRowFull(y)) {
+				deleteRow(y);
+				decreaseRowsAbove(y+1);
+				--y;
+			}
+		}
+	}
 	// Update is called once per frame
 	void Update () {
 		
