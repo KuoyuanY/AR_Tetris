@@ -90,7 +90,7 @@ public class Group : MonoBehaviour {
 		// Move Left
 		if (Input.GetKeyDown(KeyCode.LeftArrow) || IsNavigating) {
 			// Modify position
-			if (NavigationPosition.x < 0)
+			if (NavigationPosition.x <= 0)
 			{
 				transform.position += new Vector3(-1, 0, 0);
 
@@ -102,7 +102,7 @@ public class Group : MonoBehaviour {
 					// It's not valid. revert.
 					transform.position += new Vector3(1, 0, 0);
 			}
-			else {
+			else if (NavigationPosition.x > 0) {
 				// Modify position
 				transform.position += new Vector3(1, 0, 0);
 
@@ -116,22 +116,23 @@ public class Group : MonoBehaviour {
 			}
 		}
 
-		// Move Right
-		//else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-		//	// Modify position
-		//	transform.position += new Vector3(1, 0, 0);
+        //Move Right
+		else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            // Modify position
+            transform.position += new Vector3(1, 0, 0);
 
-		//	// See if valid
-		//	if (isValidGridPos())
-		//		// It's valid. Update grid.
-		//		updateGrid();
-		//	else
-		//		// It's not valid. revert.
-		//		transform.position += new Vector3(-1, 0, 0);
-		//}
+            // See if valid
+            if (isValidGridPos())
+                // It's valid. Update grid.
+                updateGrid();
+            else
+                // It's not valid. revert.
+                transform.position += new Vector3(-1, 0, 0);
+        }
 
-		// Rotate //tap
-		else if (Input.GetKeyDown(KeyCode.UpArrow)) {
+        // Rotate //tap
+        else if (Input.GetKeyDown(KeyCode.UpArrow)) {
 			transform.Rotate(0, -90, 0);
 
 			// See if valid
