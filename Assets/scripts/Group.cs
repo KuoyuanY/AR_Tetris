@@ -91,7 +91,7 @@ public class Group : MonoBehaviour {
 		// Move Left
 		if (Input.GetKeyDown(KeyCode.LeftArrow) || IsNavigating) {
             // Modify position
-            if (NavigationPosition.x < 0)
+            if (NavigationPosition.x < 0 || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 transform.position += new Vector3(-1, 0, 0);
 

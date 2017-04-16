@@ -103,6 +103,7 @@
     <Compile Include="Assets\microsoft\Assets\Scripts\Interactible.cs" />
     <Compile Include="Assets\microsoft\Assets\Scripts\InteractibleAction.cs" />
     <Compile Include="Assets\microsoft\Assets\Scripts\InteractibleManager.cs" />
+    <Compile Include="Assets\scripts\ChangeScore.cs" />
     <Compile Include="Assets\scripts\Grid.cs" />
     <Compile Include="Assets\scripts\Group.cs" />
     <Compile Include="Assets\scripts\spawn.cs" />
