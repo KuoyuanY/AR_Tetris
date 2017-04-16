@@ -31,7 +31,8 @@ public class Group : MonoBehaviour {
 		// 2.b: Add Tap and NavigationX GestureSettings to the NavigationRecognizer's RecognizableGestures.
 		NavigationRecognizer.SetRecognizableGestures(
 			GestureSettings.Tap |
-			GestureSettings.NavigationX);
+			GestureSettings.NavigationX |
+            GestureSettings.NavigationY);
 
 		// 2.b: Register for the TappedEvent with the NavigationRecognizer_TappedEvent function.
 		NavigationRecognizer.TappedEvent += NavigationRecognizer_TappedEvent;
@@ -85,35 +86,75 @@ public class Group : MonoBehaviour {
 		}        
 	}
 
-	void Update() {//falling blocks
+	void FixedUpdate() {//falling blocks
 
 		// Move Left
 		if (Input.GetKeyDown(KeyCode.LeftArrow) || IsNavigating) {
-			// Modify position
-			if (NavigationPosition.x <= 0)
-			{
-				transform.position += new Vector3(-1, 0, 0);
+            // Modify position
+            if (NavigationPosition.x <= 0)
+            {
+                transform.position += new Vector3(-1, 0, 0);
 
-				// See if valid
-				if (isValidGridPos())
-					// It's valid. Update grid.
-					updateGrid();
-				else
-					// It's not valid. revert.
-					transform.position += new Vector3(1, 0, 0);
-			}
-			else if (NavigationPosition.x > 0) {
-				// Modify position
-				transform.position += new Vector3(1, 0, 0);
+                // See if valid
+                if (isValidGridPos())
+                    // It's valid. Update grid.
+                    updateGrid();
+                else
+                    // It's not valid. revert.
+                    transform.position += new Vector3(1, 0, 0);
+            }
+            else if (NavigationPosition.x > 0)
+            {
+                // Modify position
+                transform.position += new Vector3(1, 0, 0);
 
-				// See if valid
-				if (isValidGridPos())
-					// It's valid. Update grid.
-					updateGrid();
-				else
-					// It's not valid. revert.
-					transform.position += new Vector3(-1, 0, 0);
-			}
+                // See if valid
+                if (isValidGridPos())
+                    // It's valid. Update grid.
+                    updateGrid();
+                else
+                    // It's not valid. revert.
+                    transform.position += new Vector3(-1, 0, 0);
+            }
+            else if (NavigationPosition.y >= 0) {
+                transform.Rotate(0, -90, 0);
+
+                // See if valid
+                if (isValidGridPos())
+                    // It's valid. Update grid.
+                    updateGrid();
+                else
+                    // It's not valid. revert.
+                    transform.Rotate(0, 90, 0);
+            }
+            else if (NavigationPosition.y < 0 || Time.time - lastFall >= 1) {
+
+                // Modify position
+                transform.position += new Vector3(0, -1, 0);
+
+                // See if valid
+                if (isValidGridPos())
+                {
+                    // It's valid. Update grid.
+                    updateGrid();
+                }
+                else
+                {
+                    // It's not valid. revert.
+                    transform.position += new Vector3(0, 1, 0);
+
+                    // Clear filled horizontal lines
+                    Grid.deleteFullRows();
+
+                    // Spawn next Group
+                    FindObjectOfType<spawn>().SpawnNew();
+
+                    // Disable script
+                    enabled = false;
+                }
+
+                lastFall = Time.time;
+            }
 		}
 
         //Move Right
