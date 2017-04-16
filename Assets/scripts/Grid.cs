@@ -19,7 +19,7 @@ public class Grid : MonoBehaviour {
 	public static bool insideBorder(Vector2 pos) {//checks if a block is within border
 		return ((int)pos.x >= 0 &&
 			(int)pos.x < w &&
-			(int)pos.y >= 4);
+			(int)pos.y >= 3);
 	}
 	public static void deleteRow(int y) {//deletes the row that's full
 		for (int x = 0; x < w; ++x) {
