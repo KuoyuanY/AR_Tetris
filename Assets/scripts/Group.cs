@@ -86,7 +86,7 @@ public class Group : MonoBehaviour {
 		}        
 	}
 
-	void FixedUpdate() {//falling blocks
+	void Update() {//falling blocks
 
 		// Move Left
 		if (Input.GetKeyDown(KeyCode.LeftArrow) || IsNavigating) {
@@ -200,7 +200,7 @@ public class Group : MonoBehaviour {
 				transform.position += new Vector3(0, 1, 0);
 
 				// Clear filled horizontal lines
-				Grid.deleteFullRows();
+				Grid.deleteFullRows(); 
 
 				// Spawn next Group
 				FindObjectOfType<spawn>().SpawnNew();
