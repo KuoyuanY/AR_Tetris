@@ -71,6 +71,7 @@
      <Compile Include="Assets\scripts\ChangeScore.cs" />
      <Compile Include="Assets\scripts\Grid.cs" />
      <Compile Include="Assets\scripts\Group.cs" />
+     <Compile Include="Assets\scripts\SphereSounds.cs" />
      <Compile Include="Assets\scripts\spawn.cs" />
      <None Include="Assets\microsoft\Assets\HoloToolkit-Gesture-211\Utilities\Shaders\VertexLitConfigurableTransparent.shader" />
      <None Include="Assets\microsoft\Assets\HoloToolkit-Gesture-211\Utilities\Shaders\LambertianConfigurableTransparent.shader" />
