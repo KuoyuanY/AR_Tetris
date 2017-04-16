@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class ChangeScore : MonoBehaviour
 {
-	 GUIText instruction;
+	 Text instruction;
 	// Use this for initialization
 	void Start ()
 	{
-		//instruction = GetComponent<Text>();
+		instruction = GetComponent<Text>();
         //instruction = GetComponentInChildren<Text>();
 
 	}

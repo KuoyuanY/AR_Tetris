@@ -81,6 +81,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\SpeechManager.cs" />
+    <Compile Include="Assets\SphereSounds.cs" />
     <Compile Include="Assets\microsoft\Assets\HoloToolkit-Gesture-211\Input\Scripts\CursorFeedback.cs" />
     <Compile Include="Assets\microsoft\Assets\HoloToolkit-Gesture-211\Input\Scripts\CursorManager.cs" />
     <Compile Include="Assets\microsoft\Assets\HoloToolkit-Gesture-211\Input\Scripts\GazeManager.cs" />

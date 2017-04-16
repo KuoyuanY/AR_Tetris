@@ -18,10 +18,12 @@ public class Group : MonoBehaviour {
 
 	public bool IsNavigating { get; private set; }
 
-	public Vector3 NavigationPosition { get; private set; }
+    public bool IsRotating { get; private set; }
+
+    public Vector3 NavigationPosition { get; private set; }
 
 
-	void Awake()
+    void Awake()
 	{
 		/* TODO: DEVELOPER CODING EXERCISE 2.b */
 
@@ -31,8 +33,8 @@ public class Group : MonoBehaviour {
 		// 2.b: Add Tap and NavigationX GestureSettings to the NavigationRecognizer's RecognizableGestures.
 		NavigationRecognizer.SetRecognizableGestures(
 			GestureSettings.Tap |
-			GestureSettings.NavigationX |
-            GestureSettings.NavigationY);
+			GestureSettings.NavigationRailsX |
+            GestureSettings.NavigationRailsY );
 
 		// 2.b: Register for the TappedEvent with the NavigationRecognizer_TappedEvent function.
 		NavigationRecognizer.TappedEvent += NavigationRecognizer_TappedEvent;
@@ -49,13 +51,15 @@ public class Group : MonoBehaviour {
 	}
 
 	void Start () {
-		if (!isValidGridPos()) {
+        
+        if (!isValidGridPos()) {
 			Debug.Log("GAME OVER");
 			Destroy(gameObject);
 		}
-	}
 
-	bool isValidGridPos() {//checking for child block's position
+    }
+
+    bool isValidGridPos() {//checking for child block's position
 		foreach (Transform child in transform) {
 			Vector2 v = Grid.roundVec2(child.position);
 
@@ -72,13 +76,20 @@ public class Group : MonoBehaviour {
 	}
 
 	void updateGrid() {//update block position
-		// Remove old children from grid
-		for (int y = 0; y < Grid.h; ++y)
-			for (int x = 0; x < Grid.w; ++x)
-				if (Grid.grid[x, y] != null)
-				if (Grid.grid[x, y].parent == transform)
-					Grid.grid[x, y] = null;
-
+                       // Remove old children from grid
+        for (int y = 0; y < Grid.h; ++y)
+        {
+            for (int x = 0; x < Grid.w; ++x)
+            {
+                if (Grid.grid[x, y] != null)
+                {
+                    if (Grid.grid[x, y].parent == transform)
+                    {
+                        Grid.grid[x, y] = null;
+                    }
+                }
+            }
+        }
 		// Add new children to grid
 		foreach (Transform child in transform) {
 			Vector2 v = Grid.roundVec2(child.position);
@@ -86,80 +97,92 @@ public class Group : MonoBehaviour {
 		}        
 	}
 
-	void Update() {//falling blocks
+    float totalTime = 0;
 
-		// Move Left
-		if (Input.GetKeyDown(KeyCode.LeftArrow) || IsNavigating) {
+    void Update() {//falling blocks
+        totalTime += Time.deltaTime;
+        // Move Left
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || IsNavigating || IsRotating) {
             // Modify position
-            if (NavigationPosition.x < 0 || Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                transform.position += new Vector3(-1, 0, 0);
-
-                // See if valid
-                if (isValidGridPos())
-                    // It's valid. Update grid.
-                    updateGrid();
-                else
-                    // It's not valid. revert.
-                    transform.position += new Vector3(1, 0, 0);
-            }
-            else if (NavigationPosition.x > 0)
-            {
-                // Modify position
-                transform.position += new Vector3(1, 0, 0);
-
-                // See if valid
-                if (isValidGridPos())
-                    // It's valid. Update grid.
-                    updateGrid();
-                else
-                    // It's not valid. revert.
+        if (totalTime > .33) {
+                if (NavigationPosition.x < 0 || Input.GetKeyDown(KeyCode.LeftArrow))
+                {
                     transform.position += new Vector3(-1, 0, 0);
-            }
-           else if (NavigationPosition.y > 0) {
-                transform.Rotate(0, -90, 0);
 
-                // See if valid
-                if (isValidGridPos())
-                    // It's valid. Update grid.
-                    updateGrid();
-                else
-                    // It's not valid. revert.
-                    transform.Rotate(0, 90, 0);
-            }
-            else if (NavigationPosition.y < 0 || Time.time - lastFall >= 1) {
-
-                // Modify position
-                transform.position += new Vector3(0, -1, 0);
-
-                // See if valid
-                if (isValidGridPos())
-                {
-                    // It's valid. Update grid.
-                    updateGrid();
+                    //    // See if valid
+                    if (isValidGridPos())
+                        //        // It's valid. Update grid.
+                        updateGrid();
+                    else
+                        //        // It's not valid. revert.
+                        transform.position += new Vector3(1, 0, 0);
                 }
-                else
+                else if (NavigationPosition.x > 0)
                 {
-                    // It's not valid. revert.
-                    transform.position += new Vector3(0, 1, 0);
+                    //    // Modify position
+                    transform.position += new Vector3(1, 0, 0);
 
-                    // Clear filled horizontal lines
-                    Grid.deleteFullRows();
-
-                    // Spawn next Group
-                    FindObjectOfType<spawn>().SpawnNew();
-
-                    // Disable script
-                    enabled = false;
+                    //    // See if valid
+                    if (isValidGridPos())
+                        // It's valid. Update grid.
+                        updateGrid();
+                    else
+                        // It's not valid. revert.
+                        transform.position += new Vector3(-1, 0, 0);
                 }
+                else if (IsRotating) {
+                    transform.Rotate(0, -90, 0);
 
-                lastFall = Time.time;
-            }
-		}
+                    // See if valid
+                    if (isValidGridPos())
+                        // It's valid. Update grid.
+                        updateGrid();
+                    else
+                        // It's not valid. revert.
+                        transform.Rotate(0, 90, 0);
 
+                    IsRotating = false;
+                }
+                else if (NavigationPosition.y < 0 || Time.time - lastFall >= 1)
+                {
+                    Debug.LogError("y less than 0");
+                    // Modify position
+                    transform.position += new Vector3(0, -1, 0);
+
+                    // See if valid
+                    if (isValidGridPos())
+                    {
+                        // It's valid. Update grid.
+                        updateGrid();
+                    }
+                    else
+                    {
+
+                        // It's not valid. revert.
+                        transform.position += new Vector3(0, 1, 0);
+
+                        // Clear filled horizontal lines
+                        Grid.deleteFullRows();
+
+                        // Spawn next Group
+                        FindObjectOfType<spawn>().SpawnNew();
+
+
+
+                        // Disable script
+                        enabled = false;
+
+                    }
+
+                    lastFall = Time.time;
+                }
+                totalTime = 0;
+        }
+    }
         //Move Right
 		else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            
             // Modify position
             transform.position += new Vector3(1, 0, 0);
 
@@ -188,28 +211,31 @@ public class Group : MonoBehaviour {
 		// Move Downwards and Fall
 		else if (Input.GetKeyDown(KeyCode.DownArrow) ||
 			Time.time - lastFall >= 1) {
-			// Modify position
-			transform.position += new Vector3(0, -1, 0);
+            Debug.LogError("something happened");
+            // Modify position
+            transform.position += new Vector3(0, -1, 0);
 
 			// See if valid
 			if (isValidGridPos()) {
 				// It's valid. Update grid.
 				updateGrid();
 			} else {
-				// It's not valid. revert.
-				transform.position += new Vector3(0, 1, 0);
+              //  audioSource.PlayOneShot(impactClip, 1);
+                // It's not valid. revert.
+                transform.position += new Vector3(0, 1, 0);
 
 				// Clear filled horizontal lines
 				Grid.deleteFullRows(); 
 
 				// Spawn next Group
 				FindObjectOfType<spawn>().SpawnNew();
-
-				// Disable script
-				enabled = false;
+                
+               // 
+                // Disable script
+                enabled = false;
 			}
-
-			lastFall = Time.time;
+            
+            lastFall = Time.time;
 		}
 	}
 
@@ -291,13 +317,8 @@ public class Group : MonoBehaviour {
 
 	private void NavigationRecognizer_TappedEvent(InteractionSourceKind source, int tapCount, Ray ray)
 	{
-		GameObject focusedObject = InteractibleManager.Instance.FocusedGameObject;
-
-		if (focusedObject != null)
-		{
-			focusedObject.SendMessageUpwards("OnSelect");
-		}
-	}
+        IsRotating = true;
+    }
 
 
 
