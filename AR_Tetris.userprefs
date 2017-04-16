@@ -1,10 +1,11 @@
-﻿<Properties StartupItem="Assembly-CSharp.csproj">
+﻿<Properties StartupItem="AR_Tetris.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Group.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/Group.cs">
     <Files>
-      <File FileName="Assets/Group.cs" Line="6" Column="21" />
-      <File FileName="Assets/Grid.cs" Line="52" Column="67" />
-      <File FileName="Assets/spawn.cs" Line="11" Column="11" />
+      <File FileName="Assets/scripts/Group.cs" Line="58" Column="24" />
+      <File FileName="Assets/scripts/spawn.cs" Line="6" Column="16" />
+      <File FileName="Assets/scripts/Grid.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/ChangeScore.cs" Line="18" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
