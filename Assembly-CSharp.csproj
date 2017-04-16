@@ -46,9 +46,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Grid.cs" />
-     <Compile Include="Assets\Group.cs" />
-     <Compile Include="Assets\spawn.cs" />
+     <Compile Include="Assets\Holograms\Support\AniCrane\AnimationSpeed.cs" />
+     <Compile Include="Assets\Holograms\Support\Fitbox\Fitbox.cs" />
+     <Compile Include="Assets\Holograms\Support\Fitbox\Interpolator.cs" />
+     <Compile Include="Assets\Holograms\Support\Spatial Mapping\SpatialMapping.cs" />
+     <Compile Include="Assets\Holograms\Support\Underworld\UnderworldReset.cs" />
+     <Compile Include="Assets\Holograms\Support\Underworld\UnderworldSound.cs" />
+     <Compile Include="Assets\scripts\Grid.cs" />
+     <Compile Include="Assets\scripts\Group.cs" />
+     <Compile Include="Assets\scripts\spawn.cs" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
