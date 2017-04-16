@@ -43,7 +43,7 @@ public class Group : MonoBehaviour {
 	void Update() {//falling blocks
 		
 		// Move Left
-		if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+		if (Input.GetKeyDown(KeyCode.LeftArrow) || GestureManager.Instance.IsNavigating) {
 			// Modify position
 			transform.position += new Vector3(-1, 0, 0);
 
@@ -57,20 +57,20 @@ public class Group : MonoBehaviour {
 		}
 
 		// Move Right
-		else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-			// Modify position
-			transform.position += new Vector3(1, 0, 0);
+		//else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+		//	// Modify position
+		//	transform.position += new Vector3(1, 0, 0);
 
-			// See if valid
-			if (isValidGridPos())
-				// It's valid. Update grid.
-				updateGrid();
-			else
-				// It's not valid. revert.
-				transform.position += new Vector3(-1, 0, 0);
-		}
+		//	// See if valid
+		//	if (isValidGridPos())
+		//		// It's valid. Update grid.
+		//		updateGrid();
+		//	else
+		//		// It's not valid. revert.
+		//		transform.position += new Vector3(-1, 0, 0);
+		//}
 
-		// Rotate
+		// Rotate //tap
 		else if (Input.GetKeyDown(KeyCode.UpArrow)) {
 			transform.Rotate(0, -90, 0);
 
