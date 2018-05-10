@@ -1,0 +1,4 @@
+D:\Unity_Projects\New folder\AR_Tetris\asdawegsa\AR_Tetris\AR_Tetris.csproj;x86
+D:\Unity_Projects\New folder\AR_Tetris\asdawegsa\GeneratedProjects\UWP\Assembly-CSharp\Assembly-CSharp.csproj;x86
+D:\Unity_Projects\New folder\AR_Tetris\asdawegsa\GeneratedProjects\UWP\Assembly-CSharp-firstpass\Assembly-CSharp-firstpass.csproj;x86
+D:\Unity_Projects\New folder\AR_Tetris\asdawegsa\GeneratedProjects\UWP\Assembly-CSharp-firstpass\Assembly-CSharp-firstpass.csproj;x86
